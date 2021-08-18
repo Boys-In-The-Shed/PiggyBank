@@ -1,0 +1,7 @@
+{
+	"dockerFile": "Dockerfile",
+	"runArgs": [ "--env-file", ".devcontainer/.env" ],
+	"extensions": [
+		"hashicorp.terraform"
+	]
+}
