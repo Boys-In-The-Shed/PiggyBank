@@ -2,3 +2,9 @@
 /terraform/.terraform
 /terraform/.terraform.lock.hcl
 /terraform/.tfplan
+
+/pb-lambda-package.zip
+
+bin
+obj
+.vs
