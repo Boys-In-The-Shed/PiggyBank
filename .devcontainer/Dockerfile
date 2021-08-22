@@ -1,15 +1,10 @@
-# Modify the arguments below to update software versions.
-
-ARG UBUNTU_VERSION=21.04
-
-# Start with Ubuntu.
-FROM ubuntu:${UBUNTU_VERSION}
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 
 ARG TERRAFORM_VERSION=1.0.5
 
-# Install some needed packages.
+# Install Linux Packages
 RUN apt-get update
-RUN apt-get install -y git unzip wget xz-utils
+RUN apt-get install -y zip
 
 # Install Terraform.
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
