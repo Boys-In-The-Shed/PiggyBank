@@ -7,10 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.4.0" />
 		<PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
 		<PackageReference Include="Amazon.Lambda.Serialization.Json" Version="2.0.0" />
 		<PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\PiggyBank.Lambda\PiggyBank.Lambda.csproj" />
 	</ItemGroup>
 
 </Project>
