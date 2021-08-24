@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiggyBank.Lambda.Function",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiggyBank.Lambda", "PiggyBank.Lambda\PiggyBank.Lambda.csproj", "{9B23856C-2F8B-497E-A9AF-15B223C38976}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiggyBank.Stripe", "PiggyBank.Stripe\PiggyBank.Stripe.csproj", "{E75E4144-2331-42D3-B3E4-BB68AD1384AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{9B23856C-2F8B-497E-A9AF-15B223C38976}.Release|x64.Build.0 = Release|Any CPU
 		{9B23856C-2F8B-497E-A9AF-15B223C38976}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B23856C-2F8B-497E-A9AF-15B223C38976}.Release|x86.Build.0 = Release|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Debug|x64.Build.0 = Debug|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Release|x64.ActiveCfg = Release|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Release|x64.Build.0 = Release|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{E75E4144-2331-42D3-B3E4-BB68AD1384AB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
