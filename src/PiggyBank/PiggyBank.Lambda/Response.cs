@@ -16,7 +16,7 @@ namespace PiggyBank.Lambda
         public T ResponseModel { get; }
 
         public APIGatewayProxyResponse GetResponse() =>
-            new APIGatewayProxyResponse{
+            new APIGatewayProxyResponse {
                 StatusCode = (int)StatusCode,
                 Body = JsonConvert.SerializeObject(ResponseModel),
             };
