@@ -12,8 +12,8 @@ namespace PiggyBank.Lambda.Function
 		public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest apiGatewayRequest, ILambdaContext context)
 		{
 			var request = new Request(apiGatewayRequest);
-
-			return new Response<string>(HttpStatusCode.OK, "Thanks for requesting!").GetResponse();
+			
+			return new Response<string>(HttpStatusCode.OK, request.GetEndpoint()).GetResponse();
 		}
 	}
 }

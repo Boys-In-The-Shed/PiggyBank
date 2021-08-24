@@ -13,5 +13,10 @@ namespace PiggyBank.Lambda
 
         public HttpMethod Method { get; }
         public string Path { get; }
+
+        public string GetEndpoint() 
+        {
+            return Method + Path;
+        }
     }
 }
