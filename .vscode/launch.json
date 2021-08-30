@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "PiggyBank.Lambda.Function:PiggyBank.Lambda.Function::PiggyBank.Lambda.Function.DemoEndpoint::Handle (dotnetcore3.1)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/src/PiggyBank/PiggyBank.Lambda.Function",
+                "lambdaHandler": "PiggyBank.Lambda.Function::PiggyBank.Lambda.Function.DemoEndpoint::Handle"
+            },
+            "lambda": {
+                "runtime": "dotnetcore3.1",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        }
+    ]
+}
