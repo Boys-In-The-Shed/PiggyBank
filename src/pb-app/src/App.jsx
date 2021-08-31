@@ -10,9 +10,18 @@ const stripePromise = loadStripe("pk_test_bxJuE0fpBxauHmThIvNnWtDt");
 
 function App() {
   return (
-    <Elements stripe={stripePromise}>
-      <CheckoutForm />
-    </Elements>
+    <div className='page-container'>
+      <div className='left-column'>
+        <div className='title'>Piggy Bank</div>
+        <Elements stripe={stripePromise}>
+          <CheckoutForm />
+        </Elements>
+      </div>
+      <div className='right-column'>
+        
+      </div>
+    </div>
+  
   );
 }
 
