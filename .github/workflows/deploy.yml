@@ -37,6 +37,9 @@ jobs:
                   path: pb-lambda-package
             - run: mv ./pb-lambda-package/pb-lambda-package.zip ./pb-lambda-package.zip
             - run: chmod u+x ./scripts/deploy-only.sh
+            - run: chmod u+x ./scripts/iac-init.sh
+            - run: chmod u+x ./scripts/iac-plan.sh
+            - run: chmod u+x ./scripts/iac-apply.sh
             - run: ./scripts/deploy-only.sh
 
     react-build:
