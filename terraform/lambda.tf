@@ -19,7 +19,7 @@ resource "aws_iam_role_policy_attachment" "lambda_api_role_basic_execution_attac
 }
 
 resource "aws_iam_policy" "lambda_api_role_policy" {
-	name   = "apes2d_api"
+	name   = "pb_api_${var.environment_name}_lambda_policy"
 	policy = file("${path.module}/lambda_role_policy.json")
 }
 
