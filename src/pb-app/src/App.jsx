@@ -12,7 +12,7 @@ function App() {
   return (
     <div className='page-container'>
       <div className='left-column'>
-        <div className='title'>Piggy Bank</div>
+        <div className='title'>PiggyBank</div>
         <Elements stripe={stripePromise}>
           <CheckoutForm />
         </Elements>

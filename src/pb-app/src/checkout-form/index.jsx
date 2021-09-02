@@ -2,18 +2,22 @@ import React from 'react';
 import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
 
 import CardSection from '../card-section/index.jsx';
+import ButtonBase from '../button-base/index.jsx';
+import './checkout-form.css';
 
 class CheckoutForm extends React.Component {
-  handleSubmit = async (event) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
-    event.preventDefault();
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      dollarAmount: ""
+    };
+  }
+
+  handleSubmit = async (dollarAmount) => {
     const {stripe, elements} = this.props;
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make  sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -43,8 +47,13 @@ class CheckoutForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
+        <div className="checkoutForm">
+          <div>$</div>
+          <input type="number" onChange={e => this.setState({ dollarAmount: e.target.value })}></input>
+        </div>
         <CardSection />
+        <ButtonBase userClick={() => this.handleSubmit(this.state.dollarAmount)}>PAY US!</ButtonBase>
       </form>
     );
   }

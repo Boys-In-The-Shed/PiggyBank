@@ -1,0 +1,64 @@
+.checkoutForm {
+    height: 40px;
+    padding: 10px 12px;
+    margin: 16px 0px 16px 0px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #32325d;
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  
+    box-shadow: 0 1px 3px 0 #cfd7df;
+    display: flex;
+    align-items: center;
+    
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+    outline: 1px;
+
+    color: #32325d;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.checkoutForm > input {
+    width: 100%;
+    border: 1px solid transparent;
+    outline: 1px;
+    font-size: 16px;
+    font-family: Helvetica, sans-serif;
+}
+
+.checkoutForm > div {
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    color: #aab7c4;
+    align-content: center;
+    text-align: center;
+    width: 16px;
+    padding-left: 4px;
+    padding-right: 10px;
+}
+
+.checkoutForm--invalid {    
+    border-color: #fa755a;
+}
+
+.checkoutForm--webkit-autofill {
+    background-color: #fefde5 !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+::-webkit-input-placeholder {
+    color: #aab7c4;
+}
