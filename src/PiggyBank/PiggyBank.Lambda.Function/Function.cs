@@ -48,7 +48,7 @@ namespace PiggyBank.Lambda.Function
 			apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
 			apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
 
-			return response.GetResponse();
+			return apiGatewayResponse;
 		}
 
 		public Response FindHandler(Request request) 
