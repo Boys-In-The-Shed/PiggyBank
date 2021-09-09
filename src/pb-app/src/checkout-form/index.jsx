@@ -23,7 +23,7 @@ async function paymentSetup(amount) {
   return responseModel;
 }
 
-const CheckoutForm = ({ onResult, stripe, elements }) => {
+const CheckoutForm = ({ stripe, elements }) => {
 
   const [dollarAmount, setDollarAmount] = useState("");
   const [formMessage, setFormMessage] = useState("");
