@@ -6,5 +6,9 @@
 	{
 		"method": "GET",
 		"path": "/demo"
+	},
+	{
+		"method": "POST",
+		"path": "/payment/setup"
 	}
 ]
