@@ -25,13 +25,6 @@ async function paymentSetup(amount) {
 
 const CheckoutForm = ({ onResult, stripe, elements }) => {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     dollarAmount: ""
-  //   };
-    // this.onResult = this.props.onResult.bind(this);
-  // }
   const [dollarAmount, setDollarAmount] = useState("");
   const [formMessage, setFormMessage] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -39,17 +32,19 @@ const CheckoutForm = ({ onResult, stripe, elements }) => {
 
   const submitClick = async (amount) => {
     setFormMessage("");
-    if (dollarAmount == "" ) {
+    if (dollarAmount === "" ) {
       setFormMessage("Please enter some money!");
+      return;
     }
     let responseModel = await paymentSetup(amount)
     if (responseModel.error) {
       setFormMessage(responseModel.error);
+      console.log(responseModel.error);
       return;
     }
+    console.log("clientSecret = " + responseModel.client_secret + " AND paymentIntentID = " + responseModel.payment_intent_id);
     setClientSecret(responseModel.client_secret);
     setPaymentIntentID(responseModel.payment_intent_id);
-    // setFormMessage(responseModel.client_secret + " + " + responseModel.payment_intent_id)
 
     // TODO add handleSubmit function call
   }
@@ -60,7 +55,7 @@ const CheckoutForm = ({ onResult, stripe, elements }) => {
       return;
     }
 
-    // Change {CLIENT_SECRET}
+    // TODO Change {CLIENT_SECRET}
     const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -71,7 +66,7 @@ const CheckoutForm = ({ onResult, stripe, elements }) => {
     });
 
     if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
+      setFormMessage(result.error.message);
       console.log(result.error.message);
     } else {
       // The payment has been processed!
@@ -87,8 +82,6 @@ const CheckoutForm = ({ onResult, stripe, elements }) => {
       }
     }
   };
-
-  
 
   return (
     <form>
