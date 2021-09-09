@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using Amazon.Lambda.APIGatewayEvents;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ namespace PiggyBank.Lambda
         public APIGatewayProxyResponse GetResponse() =>
             new APIGatewayProxyResponse {
                 StatusCode = (int)StatusCode,
+                Headers = new Dictionary<string, string>(),
                 Body = JsonConvert.SerializeObject(ResponseModel),
             };
         
