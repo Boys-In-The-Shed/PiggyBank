@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
+import {useStripe, useElements, ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
 
 import CardSection from '../card-section/index.jsx';
 import ButtonBase from '../button-base/index.jsx';
@@ -18,17 +18,16 @@ async function paymentSetup(amount) {
   });
   const responseModel =  await response.json();
   if (response.status !== 200 && !responseModel.error) {
-    responseModel.error = "Internal Server Error :(";
+    responseModel.error = "Something went wrong.";
   }
   return responseModel;
 }
 
-const CheckoutForm = ({ stripe, elements }) => {
-
+const CheckoutForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
   const [dollarAmount, setDollarAmount] = useState("");
   const [formMessage, setFormMessage] = useState("");
-  const [clientSecret, setClientSecret] = useState("");
-  const [paymentIntentID, setPaymentIntentID] = useState("");
 
   const submitClick = async (amount) => {
     setFormMessage("");
@@ -43,13 +42,11 @@ const CheckoutForm = ({ stripe, elements }) => {
       return;
     }
     console.log("clientSecret = " + responseModel.client_secret + " AND paymentIntentID = " + responseModel.payment_intent_id);
-    setClientSecret(responseModel.client_secret);
-    setPaymentIntentID(responseModel.payment_intent_id);
 
     // TODO add handleSubmit function call
   }
 
-  const handleSubmit = async (dollarAmount) => {
+  const handleSubmit = async () => {
 
     if (!stripe || !elements) {
       return;
