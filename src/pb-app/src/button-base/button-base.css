@@ -20,4 +20,5 @@
 
 .buttonBase:hover {
     background-color: #78b762;
+    cursor: pointer;
 }

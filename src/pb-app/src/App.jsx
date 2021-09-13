@@ -18,10 +18,8 @@ function App() {
         </Elements>
       </div>
       <div className='right-column'>
-        
       </div>
     </div>
-  
   );
 }
 
