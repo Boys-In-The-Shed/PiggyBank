@@ -25,7 +25,6 @@ namespace PiggyBank.Lambda
 
         public T DeserializeBody<T>()
         {
-            Console.WriteLine("#######" + Body);
             return JsonConvert.DeserializeObject<T>(Body);
         }
     }
