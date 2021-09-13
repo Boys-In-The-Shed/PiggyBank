@@ -1,0 +1,57 @@
+name: deploy
+on:
+    push:
+        branches:
+            - master
+jobs:
+
+    lambda-build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-dotnet@v1.7.2
+              with:
+                dotnet-version: '3.1.x'
+            - run: chmod u+x ./scripts/build-lambda.sh
+            - run: ./scripts/build-lambda.sh
+            - uses: actions/upload-artifact@v2
+              with:
+                  name: pb-lambda-package
+                  path: pb-lambda-package.zip
+
+    lambda-deploy:
+        runs-on: ubuntu-latest
+        needs: [lambda-build]
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            TF_VAR_environment_name: production
+        steps:
+            - uses: actions/checkout@v2
+            - uses: hashicorp/setup-terraform@v1
+              with:
+                terraform_wrapper: false
+            - uses: actions/download-artifact@v2
+              with:
+                  name: pb-lambda-package
+                  path: pb-lambda-package
+            - run: mv ./pb-lambda-package/pb-lambda-package.zip ./pb-lambda-package.zip
+            - run: chmod u+x ./scripts/deploy-only.sh
+            - run: chmod u+x ./scripts/iac-init.sh
+            - run: chmod u+x ./scripts/iac-plan.sh
+            - run: chmod u+x ./scripts/iac-apply.sh
+            - run: ./scripts/deploy-only.sh
+
+    react-build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                node-version: "14"
+            - run: chmod u+x ./scripts/build-react.sh
+            - run: ./scripts/build-react.sh
+            - uses: actions/upload-artifact@v2
+              with:
+                  name: react-build
+                  path: src/pb-app/build

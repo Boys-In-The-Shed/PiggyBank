@@ -1,0 +1,26 @@
+name: build
+on:
+    push:
+        branches-ignore:
+            - master
+jobs:
+
+    lambda:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-dotnet@v1.7.2
+              with:
+                dotnet-version: '3.1.x'
+            - run: chmod u+x ./scripts/build-lambda.sh
+            - run: ./scripts/build-lambda.sh
+
+    react:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                node-version: "14"
+            - run: chmod u+x ./scripts/build-react.sh
+            - run: ./scripts/build-react.sh

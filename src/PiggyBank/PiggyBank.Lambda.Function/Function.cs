@@ -53,10 +53,16 @@ namespace PiggyBank.Lambda.Function
 				var request = new Request(apiGatewayRequest);
 				var response = await FindHandler(request);
 
-				return response.GetResponse();
+				// CORS.
+        var apiGatewayResponse = response.GetResponse();
+        apiGatewayResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+        apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
+        apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
+
+        return apiGatewayResponse;
 			} catch (Exception e) {
 				return new Response(HttpStatusCode.InternalServerError, new { message = e.Message }).GetResponse();
-			}
+      }
 		}
 
 		public async Task<Response> FindHandler(Request request) 

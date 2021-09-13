@@ -7,4 +7,5 @@
   <ItemGroup>
     <PackageReference Include="Stripe.net" Version="39.66.0" />
   </ItemGroup>
+
 </Project>
