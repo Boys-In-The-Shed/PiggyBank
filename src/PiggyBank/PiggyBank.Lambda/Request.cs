@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using Amazon.Lambda.APIGatewayEvents;
 using Newtonsoft.Json;
 
@@ -24,6 +25,7 @@ namespace PiggyBank.Lambda
 
         public T DeserializeBody<T>()
         {
+            Console.WriteLine("#######" + Body);
             return JsonConvert.DeserializeObject<T>(Body);
         }
     }

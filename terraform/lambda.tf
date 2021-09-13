@@ -4,6 +4,7 @@ resource "aws_lambda_function" "lambda_api" {
 	role          = aws_iam_role.lambda_api_role.arn
 	handler       = "PiggyBank.Lambda.Function::PiggyBank.Lambda.Function.Function::FunctionHandler"
 	runtime       = "dotnetcore3.1"
+	timeout       = 10
 
 	source_code_hash = filebase64sha256("${path.module}/../pb-lambda-package.zip")
 }

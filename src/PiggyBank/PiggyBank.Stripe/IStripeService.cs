@@ -1,8 +1,9 @@
+using System.Threading.Tasks;
+
 namespace PiggyBank.Stripe 
 {
-    interface IStripeService
+    public interface IStripeService
     {
-        Task<string> SetupPaymentIntent(decimal amount); 
-        
+        Task<(string paymentIntentId, string clientSecret)> SetupPaymentIntent(decimal amount); 
     }
 }
