@@ -2,12 +2,15 @@
 using Amazon.Lambda.Core;
 using Autofac;
 using Newtonsoft.Json;
+using PiggyBank.Stripe;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 namespace PiggyBank.Lambda.Function
@@ -20,6 +23,7 @@ namespace PiggyBank.Lambda.Function
 		public Function() 
 		{
 			var contBuilder = new ContainerBuilder();
+			Registrations(contBuilder);
 
 			var assembly = Assembly.GetExecutingAssembly();
 			var endpointTypes = assembly.GetTypes()
@@ -37,21 +41,31 @@ namespace PiggyBank.Lambda.Function
 			_container = contBuilder.Build();
 		}
 
-		public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest apiGatewayRequest, ILambdaContext context)
+		public static void Registrations(ContainerBuilder cb) 
 		{
-			var request = new Request(apiGatewayRequest);
-			var response = FindHandler(request);
-
-			// CORS.
-			var apiGatewayResponse = response.GetResponse();
-			apiGatewayResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-			apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
-			apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
-
-			return apiGatewayResponse;
+			cb.RegisterType<PaymentIntentService>().As<ICreatable<PaymentIntent, PaymentIntentCreateOptions>>();
+			cb.RegisterType<StripeService>().As<IStripeService>();
 		}
 
-		public Response FindHandler(Request request) 
+		public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest apiGatewayRequest, ILambdaContext context)
+		{
+			try {
+				var request = new Request(apiGatewayRequest);
+				var response = await FindHandler(request);
+
+				// CORS.
+        var apiGatewayResponse = response.GetResponse();
+        apiGatewayResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+        apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
+        apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
+
+        return apiGatewayResponse;
+			} catch (Exception e) {
+				return new Response(HttpStatusCode.InternalServerError, new { message = e.Message }).GetResponse();
+      }
+		}
+
+		public async Task<Response> FindHandler(Request request) 
 		{
 			var lookupKey = (request.Method, request.Path);
 
@@ -61,7 +75,7 @@ namespace PiggyBank.Lambda.Function
 			var endpointType = _endpointTypes[lookupKey];
 			var endpoint = (IEndpoint)_container.Resolve(endpointType);
 
-			return endpoint.Handle(request);
+			return await endpoint.Handle(request);
 		}
 	}
 }

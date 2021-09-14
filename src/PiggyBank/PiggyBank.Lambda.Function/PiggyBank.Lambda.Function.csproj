@@ -14,6 +14,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\PiggyBank.Lambda\PiggyBank.Lambda.csproj" />
+	  <ProjectReference Include="..\PiggyBank.Stripe\PiggyBank.Stripe.csproj" />
 	</ItemGroup>
 
 </Project>

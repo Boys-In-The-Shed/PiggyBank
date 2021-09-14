@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiggyBank.Stripe", "PiggyBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiggyBank.Test.Unit", "PiggyBank.Test.Unit\PiggyBank.Test.Unit.csproj", "{15FB756E-C4D3-491C-8E97-BEF84C6392CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiggyBank.Stripe", "PiggyBank.Stripe\PiggyBank.Stripe.csproj", "{407801E0-A426-4577-941B-4722302DB147}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

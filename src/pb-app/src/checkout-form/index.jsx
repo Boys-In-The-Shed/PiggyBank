@@ -43,10 +43,10 @@ const CheckoutForm = () => {
     }
     console.log("clientSecret = " + responseModel.client_secret + " AND paymentIntentID = " + responseModel.payment_intent_id);
 
-    // TODO add handleSubmit function call
+    handleSubmit(responseModel.client_secret);
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (clientSecret) => {
 
     if (!stripe || !elements) {
       return;
