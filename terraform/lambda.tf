@@ -6,6 +6,12 @@ resource "aws_lambda_function" "lambda_api" {
 	runtime       = "dotnetcore3.1"
 	timeout       = 10
 
+	environment {
+		variables = {
+			DYNAMODB_TABLE_NAME = aws_dynamodb_table.dynamodb_table.name
+		}
+	}
+
 	source_code_hash = filebase64sha256("${path.module}/../pb-lambda-package.zip")
 }
 
