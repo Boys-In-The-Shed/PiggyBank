@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "lambda_api" {
 	function_name = "pb_api_${var.environment_name}"
-	filename      = "${path.module}/../pb-lambda-package.zip"
+	filename      = "${path.module}/../../pb-lambda-package.zip"
 	role          = aws_iam_role.lambda_api_role.arn
 	handler       = "PiggyBank.Lambda.Function::PiggyBank.Lambda.Function.Function::FunctionHandler"
 	runtime       = "dotnetcore3.1"
@@ -12,7 +12,7 @@ resource "aws_lambda_function" "lambda_api" {
 		}
 	}
 
-	source_code_hash = filebase64sha256("${path.module}/../pb-lambda-package.zip")
+	source_code_hash = filebase64sha256("${path.module}/../../pb-lambda-package.zip")
 }
 
 resource "aws_iam_role" "lambda_api_role" {
