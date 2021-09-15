@@ -67,7 +67,7 @@ jobs:
             - run: chmod u+x ./scripts/iac-output.sh
             - run: ./scripts/deploy-only.sh
             - id: output-step
-              run: ./iac-output.sh
+              run: ./scripts/iac-output.sh
         outputs:
             CLOUDFRONT_ID: ${{ steps.output-step.outputs.CLOUDFRONT_ID }}
 
