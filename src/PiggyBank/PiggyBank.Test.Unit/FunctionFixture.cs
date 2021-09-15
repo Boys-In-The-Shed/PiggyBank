@@ -3,13 +3,14 @@ using Amazon.Lambda.Core;
 using Moq;
 using NUnit.Framework;
 using PiggyBank.Lambda.Function;
+using System.Threading.Tasks;
 
 namespace PiggyBank.Test.Unit
 {
     public class FunctionFixture
     {
         [Test]
-        public void should_hit_demo_endpoint()
+        public async Task should_hit_demo_balance_endpoint()
         {
             // Arrange.
             var sut = new Function();
@@ -17,11 +18,11 @@ namespace PiggyBank.Test.Unit
             var apiGatewayRequest = new APIGatewayProxyRequest
             {
                 HttpMethod = "GET",
-                Path = "/demo"
+                Path = "/balance"
             };
 
             // Act.
-            var apiGatewayResponse = sut.FunctionHandler(apiGatewayRequest, Mock.Of<ILambdaContext>());
+            var apiGatewayResponse = await sut.FunctionHandler(apiGatewayRequest, Mock.Of<ILambdaContext>());
 
             // Assert.
             Assert.That(apiGatewayResponse.StatusCode, Is.EqualTo(200));

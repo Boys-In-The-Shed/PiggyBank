@@ -1,7 +1,6 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Autofac;
-using Newtonsoft.Json;
 using PiggyBank.Stripe;
 using Stripe;
 using System;
@@ -49,20 +48,23 @@ namespace PiggyBank.Lambda.Function
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest apiGatewayRequest, ILambdaContext context)
 		{
-			try {
+			try
+			{
 				var request = new Request(apiGatewayRequest);
 				var response = await FindHandler(request);
 
 				// CORS.
-        var apiGatewayResponse = response.GetResponse();
-        apiGatewayResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-        apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
-        apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
+				var apiGatewayResponse = response.GetResponse();
+				apiGatewayResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+				apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
+				apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
 
-        return apiGatewayResponse;
-			} catch (Exception e) {
+				return apiGatewayResponse;
+			}
+			catch (Exception e)
+			{
 				return new Response(HttpStatusCode.InternalServerError, new { message = e.Message }).GetResponse();
-      }
+			}
 		}
 
 		public async Task<Response> FindHandler(Request request) 

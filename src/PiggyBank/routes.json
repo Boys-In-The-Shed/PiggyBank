@@ -1,7 +1,7 @@
 [
 	{
 		"method": "GET",
-		"path": "/"
+		"path": "/balance"
 	},
 	{
 		"method": "POST",
