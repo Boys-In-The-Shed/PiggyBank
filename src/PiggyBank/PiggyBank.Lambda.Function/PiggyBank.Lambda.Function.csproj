@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\PiggyBank.Database\PiggyBank.Database.csproj" />
 	  <ProjectReference Include="..\PiggyBank.Lambda\PiggyBank.Lambda.csproj" />
 	  <ProjectReference Include="..\PiggyBank.Stripe\PiggyBank.Stripe.csproj" />
 	</ItemGroup>

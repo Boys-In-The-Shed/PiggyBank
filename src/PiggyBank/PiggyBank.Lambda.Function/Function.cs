@@ -1,6 +1,7 @@
 ﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Autofac;
+using PiggyBank.Database;
 using PiggyBank.Stripe;
 using Stripe;
 using System;
@@ -44,6 +45,7 @@ namespace PiggyBank.Lambda.Function
 		{
 			cb.RegisterType<PaymentIntentService>().As<ICreatable<PaymentIntent, PaymentIntentCreateOptions>>();
 			cb.RegisterType<StripeService>().As<IStripeService>();
+			cb.RegisterType<DynamoKeyValueStore>().As<IKeyValueStore>().SingleInstance();
 		}
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest apiGatewayRequest, ILambdaContext context)
