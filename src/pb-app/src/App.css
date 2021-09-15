@@ -4,8 +4,9 @@
 }
 
 .left-column {
-  width: 512px; 
-  min-height: 100vh;
+  min-width: 512px; 
+  max-width: 512px; 
+  max-height: 100vh;
   padding: 32px;
 }
 

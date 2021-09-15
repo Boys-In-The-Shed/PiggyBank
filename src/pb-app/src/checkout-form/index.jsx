@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useStripe, useElements, ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
 import CardSection from '../card-section/index.jsx';
 import ButtonBase from '../button-base/index.jsx';
@@ -23,7 +23,25 @@ async function paymentSetup(amount) {
   return responseModel;
 }
 
-const CheckoutForm = () => {
+async function paymentConfirm(paymentIntentID) {
+  const response = await fetch('https://api.piggybank.lukejoshuapark.io/payment/confirm', {
+    method: 'POST',
+    mode: 'cors', 
+    headers: {
+      'content-type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({payment_intent_id : paymentIntentID})
+  });
+  const responseModel =  await response.json();
+  if (response.status !== 200 && !responseModel.error) {
+    responseModel.error = "Something went wrong.";
+  }
+  return responseModel;
+}
+
+const CheckoutForm = ({ updateBalance }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [dollarAmount, setDollarAmount] = useState("");
@@ -41,19 +59,18 @@ const CheckoutForm = () => {
       console.log(responseModel.error);
       return;
     }
-    console.log("clientSecret = " + responseModel.client_secret + " AND paymentIntentID = " + responseModel.payment_intent_id);
-
-    handleSubmit(responseModel.client_secret);
+    
+    handleSubmit(responseModel.payment_intent_id, responseModel.client_secret);
+    return;
   }
 
-  const handleSubmit = async (clientSecret) => {
+  const handleSubmit = async (paymentIntentID, clientSecret) => {
 
     if (!stripe || !elements) {
       return;
     }
 
-    // TODO Change {CLIENT_SECRET}
-    const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
+    const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
@@ -65,11 +82,17 @@ const CheckoutForm = () => {
     if (result.error) {
       setFormMessage(result.error.message);
       console.log(result.error.message);
+      return;
     } else {
-      // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
         setFormMessage("Successful!");
-        // TODO POST successful payment to server
+        let responseModel = await paymentConfirm(paymentIntentID);
+        if (responseModel.error) {
+          setFormMessage(responseModel.error);
+          console.log(responseModel.error);
+          return;
+        }
+        updateBalance(responseModel.current_balance);
         
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
@@ -77,6 +100,7 @@ const CheckoutForm = () => {
         // payment_intent.succeeded event that handles any business critical
         // post-payment actions.
       }
+      return;
     }
   };
 
@@ -87,7 +111,7 @@ const CheckoutForm = () => {
         <input type="number" onChange={e => setDollarAmount(e.target.value)}></input>
       </div>
       <CardSection />
-      <div>
+      <div className='message-button-container'>
         <div className='form-message'>{formMessage}</div>
         <ButtonBase userClick={() => submitClick(dollarAmount)}>PAY US!</ButtonBase>
       </div>
@@ -95,12 +119,4 @@ const CheckoutForm = () => {
   );
 }
 
-export default function InjectedCheckoutForm() {
-  return (
-    <ElementsConsumer>
-      {({stripe, elements}) => (
-        <CheckoutForm  stripe={stripe} elements={elements} />
-      )}
-    </ElementsConsumer>
-  );
-}
+export default CheckoutForm;
