@@ -63,6 +63,10 @@ input[type=number] {
     color: #aab7c4;
 }
 
+.message-button-container {
+    display: flex;
+}
+
 .form-message {
     flex-grow: 1;
     width: fit-content;

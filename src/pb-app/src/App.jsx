@@ -6,7 +6,8 @@ import {loadStripe} from '@stripe/stripe-js';
 
 import CheckoutForm from './checkout-form/index.jsx';
 
-const stripePromise = loadStripe("pk_test_bxJuE0fpBxauHmThIvNnWtDt");
+
+const stripePromise = loadStripe("pk_test_51JWWyOLVagDHTLlfAhdLcFtbDGliiLpCieBDpc71mxZkkymVf5gfJvvUjvdyE8HRNz3XaSTFk1QWw3TN4izstg0F00s0ZrbSLp");
 
 async function getBalance() {
   const response = await fetch('https://api.piggybank.lukejoshuapark.io/balance', {
@@ -26,14 +27,14 @@ async function getBalance() {
 
 function App() {
   const [balance, setBalance] = useState(0);
-  useEffect(() => (async () => { setBalance(await getBalance()) })(), []);
+  useEffect(() => (async () => { setBalance(await getBalance()) }), []);
 
   return (
     <div className='page-container'>
       <div className='left-column'>
         <div className='title'>PiggyBank</div>
         <Elements stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm updateBalance={(newBalance) => setBalance(newBalance)}/>
         </Elements>
       </div>
       <div className='right-column'>
