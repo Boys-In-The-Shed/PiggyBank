@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using PiggyBank.Lambda.Function.RequestModels;
+using PiggyBank.Lambda.Function.ResponseModels;
 using PiggyBank.Stripe;
 
 namespace PiggyBank.Lambda.Function
@@ -21,7 +22,11 @@ namespace PiggyBank.Lambda.Function
             
             var paymentIntentObj = await _stripeService.SetupPaymentIntent(amount);
 
-            return new Response(System.Net.HttpStatusCode.OK, paymentIntentObj);
+            return new Response(System.Net.HttpStatusCode.OK, new PaymentSetupResponseModel 
+            { 
+                payment_intent_id = paymentIntentObj.paymentIntentId,
+                client_secret = paymentIntentObj.clientSecret
+            });
         }
     }
 }
