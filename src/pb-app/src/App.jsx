@@ -26,8 +26,8 @@ async function getBalance() {
 }
 
 function App() {
-  const [balance, setBalance] = useState(0);
-  useEffect(() => (async () => { setBalance(await getBalance()) }), []);
+  const [balance, setBalance] = useState(null);
+  useEffect(() => (async () => { setBalance(await getBalance()) })(), []);
 
   return (
     <div className='page-container'>
@@ -39,7 +39,7 @@ function App() {
       </div>
       <div className='right-column'>
         <div className='balance-display'>
-          {balance === 0 ? <></> : "$" + balance}
+          {balance === null ? <></> : "$" + balance}
         </div>
       </div>
     </div>
