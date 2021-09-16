@@ -6,9 +6,9 @@ namespace PiggyBank.Stripe
 {
     public class StripeService : IStripeService
     {
-        private readonly ICreatable<PaymentIntent, PaymentIntentCreateOptions> _paymentIntentService;
+        private readonly IPaymentIntentService _paymentIntentService;
 
-        public StripeService(ICreatable<PaymentIntent, PaymentIntentCreateOptions> paymentIntentService)
+        public StripeService(IPaymentIntentService paymentIntentService)
         {
             _paymentIntentService = paymentIntentService;
         }
@@ -27,6 +27,15 @@ namespace PiggyBank.Stripe
             }, options);
 
             return (paymentIntent.Id, paymentIntent.ClientSecret);
+        }
+
+        public async Task<(string status, decimal amount)> CheckPaymentIntentStatus(string paymentIntent)
+        {
+            var result = await _paymentIntentService.GetAsync(paymentIntent);
+
+            var amount = ((decimal)result.Amount) / 100;
+
+            return (result.Status, amount);
         }
     }
 }
