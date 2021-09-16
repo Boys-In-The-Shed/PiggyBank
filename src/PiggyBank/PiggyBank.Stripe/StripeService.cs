@@ -6,11 +6,15 @@ namespace PiggyBank.Stripe
 {
     public class StripeService : IStripeService
     {
-        private readonly IPaymentIntentService _paymentIntentService;
+        private readonly ICreatable<PaymentIntent, PaymentIntentCreateOptions> _paymentIntentCreator;
+        private readonly IRetrievable<PaymentIntent, PaymentIntentGetOptions> _paymentIntentRetriever;
 
-        public StripeService(IPaymentIntentService paymentIntentService)
+        public StripeService(
+            ICreatable<PaymentIntent, PaymentIntentCreateOptions> paymentIntentCreator,
+            IRetrievable<PaymentIntent, PaymentIntentGetOptions> paymentIntentRetriever)
         {
-            _paymentIntentService = paymentIntentService;
+            _paymentIntentCreator = paymentIntentCreator;
+            _paymentIntentRetriever = paymentIntentRetriever;
         }
 
         public async Task<(string paymentIntentId, string clientSecret)> SetupPaymentIntent(decimal amount) 
@@ -20,7 +24,7 @@ namespace PiggyBank.Stripe
                 ApiKey = "sk_test_51JWWyOLVagDHTLlfKUoFEKhvMzos9Nmj0WQkDwEhjzWr0SXQKiHBn4zSxVUCeO9ITywdL8bqqcO1nN4aUgaBmFNl00fbRVbAHk"
             };
 
-            var paymentIntent = await _paymentIntentService.CreateAsync(new PaymentIntentCreateOptions
+            var paymentIntent = await _paymentIntentCreator.CreateAsync(new PaymentIntentCreateOptions
             {
                 Amount = Convert.ToInt64(amount*100),
                 Currency = "nzd",
@@ -31,7 +35,7 @@ namespace PiggyBank.Stripe
 
         public async Task<(string status, decimal amount)> CheckPaymentIntentStatus(string paymentIntent)
         {
-            var result = await _paymentIntentService.GetAsync(paymentIntent);
+            var result = await _paymentIntentRetriever.GetAsync(paymentIntent);
 
             var amount = ((decimal)result.Amount) / 100;
 
