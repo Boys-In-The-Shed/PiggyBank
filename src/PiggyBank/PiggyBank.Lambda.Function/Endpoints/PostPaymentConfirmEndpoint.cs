@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PiggyBank.Lambda.Function.Endpoints
 {
-    [Endpoint("POST", "payment/confirm")]
+    [Endpoint("POST", "/payment/confirm")]
     class PostPaymentConfirmEndpoint : IEndpoint
     {
         private readonly IKeyValueStore _database;
