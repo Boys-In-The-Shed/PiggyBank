@@ -5,6 +5,7 @@ resource "aws_lambda_function" "lambda_api" {
 	handler       = "PiggyBank.Lambda.Function::PiggyBank.Lambda.Function.Function::FunctionHandler"
 	runtime       = "dotnetcore3.1"
 	timeout       = 10
+	memory_size   = 256
 
 	environment {
 		variables = {
