@@ -9,6 +9,7 @@ namespace PiggyBank.Lambda.Function
     public class PaymentSetupEndpoint : IEndpoint
     {
         private readonly IStripeService _stripeService;
+
         public PaymentSetupEndpoint(IStripeService stripeService)
         {
             _stripeService = stripeService;

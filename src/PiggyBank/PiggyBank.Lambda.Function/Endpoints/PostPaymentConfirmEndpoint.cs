@@ -14,6 +14,7 @@ namespace PiggyBank.Lambda.Function.Endpoints
     {
         private readonly IKeyValueStore _database;
         private readonly IStripeService _stripe;
+
         public PostPaymentConfirmEndpoint(IKeyValueStore database, IStripeService stripe)
         {
             _database = database;
@@ -45,7 +46,7 @@ namespace PiggyBank.Lambda.Function.Endpoints
             var balance = await _database.GetAsync<decimal>("balance");
 
             // Add payment to balance
-            balance = balance + amount;
+            balance += amount;
 
             // Writeback balance
             await _database.SetAsync("balance", balance);
