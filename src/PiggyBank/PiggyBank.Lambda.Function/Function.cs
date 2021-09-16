@@ -69,11 +69,10 @@ namespace PiggyBank.Lambda.Function
 			{
 				var request = new Request(apiGatewayRequest);
 				var response = await FindHandler(request);
-				Console.WriteLine($"Found handler for request ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
 
 				// CORS.
 				var apiGatewayResponse = response.GetResponse();
-				Console.WriteLine($"Finished handling ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
+				Console.WriteLine($"Transformed response ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
 				apiGatewayResponse.Headers.Add("Access-Control-Allow-Origin", "*");
 				apiGatewayResponse.Headers.Add("Access-Control-Allow-Headers", "*");
 				apiGatewayResponse.Headers.Add("Access-Control-Allow-Methods", "*");
@@ -88,15 +87,22 @@ namespace PiggyBank.Lambda.Function
 
 		public async Task<Response> FindHandler(Request request) 
 		{
+			Console.WriteLine($"Looking up handler with method and path ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
 			var lookupKey = (request.Method, request.Path);
 
 			if (!_endpointTypes.ContainsKey(lookupKey)) 
 				return new Response(HttpStatusCode.NotFound, "Sorry, don't know what you're looking for!");
 
 			var endpointType = _endpointTypes[lookupKey];
+			Console.WriteLine($"Got handler ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
 			var endpoint = (IEndpoint)_container.Resolve(endpointType);
+			Console.WriteLine($"Resolved handler ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
 
-			return await endpoint.Handle(request);
+			Console.WriteLine($"Beginning handle... ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
+			var response = await endpoint.Handle(request);
+			Console.WriteLine($"Finished handle... ({(DateTimeOffset.Now - _startupTime).TotalMilliseconds}ms)");
+
+			return response;
 		}
 	}
 }
