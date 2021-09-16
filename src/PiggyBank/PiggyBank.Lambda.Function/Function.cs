@@ -43,7 +43,7 @@ namespace PiggyBank.Lambda.Function
 
 		public static void Registrations(ContainerBuilder cb) 
 		{
-			cb.RegisterType<PaymentIntentService>().As<ICreatable<PaymentIntent, PaymentIntentCreateOptions>>();
+			cb.RegisterType<PaymentIntentService>().As<IPaymentIntentService>();
 			cb.RegisterType<StripeService>().As<IStripeService>();
 			cb.RegisterType<DynamoKeyValueStore>().As<IKeyValueStore>().SingleInstance();
 		}
